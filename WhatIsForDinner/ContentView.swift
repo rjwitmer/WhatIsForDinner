@@ -8,14 +8,56 @@
 import SwiftUI
 
 struct ContentView: View {
+    
+    @State private var choicesArray = ["Burgers",
+                                       "Burritos",
+                                       "Cobb Salad", "Pepperoni Pizza", "Sushi"
+    ]
+    @State private var chosenMeal = ""
+    @State private var previousMeal = ""
+    
     var body: some View {
+        
         VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundColor(.accentColor)
-            Text("Hello, world!")
+            Text("What's for Dinner?")
+                .font(.largeTitle)
+                .fontWeight(.black)
+                .foregroundColor(.white)
+                .padding()
+                .frame(maxWidth: .infinity)
+                .background(.teal)
+                            
+            Image(chosenMeal)
+                .resizable()
+                .scaledToFit()
+                .padding()
+                .animation(.default, value: chosenMeal)
+            
+            Spacer()
+            
+            Text(chosenMeal)
+                .font(.largeTitle)
+                .fontWeight(.thin)
+                .animation(.default, value: chosenMeal)
+            
+            Button {
+                
+                repeat {
+                    chosenMeal = choicesArray.randomElement() ?? ""
+                } while chosenMeal == previousMeal
+                
+                previousMeal = chosenMeal
+                
+            } label: {
+                Image(systemName: "fork.knife.circle")
+                Text("What's for Dinner?")}
+            .font(.title)
+            .fontWeight(.semibold)
+            .buttonStyle(.borderedProminent)
+            .accentColor(.teal)
+
         }
-        .padding()
+        
     }
 }
 
